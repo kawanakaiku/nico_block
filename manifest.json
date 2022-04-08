@@ -12,8 +12,8 @@
    },
    "content_scripts": [ {
       "js": [ "js/block.js" ],
-      "matches": [ "https://www.nicovideo.jp/search/*", "https://www.nicovideo.jp/video_top*" ],
-      "run_at": "document_end"
+      "matches": [ "https://www.nicovideo.jp/*", "https://game.nicovideo.jp/*" ],
+      "run_at": "document_start"
    } ],
    "background": {
     "scripts": [
@@ -26,5 +26,5 @@
       "19": "img/badge_on.png",
       "48": "img/icon_48.png"
    },
-  "permissions": ["storage", "activeTab", "webRequest", "https://ext.nicovideo.jp/*"]
+  "permissions": ["storage", "webRequest", "webRequestBlocking", "https://*.nicovideo.jp/*"]
 }
