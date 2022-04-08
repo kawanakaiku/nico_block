@@ -19,21 +19,15 @@ function video_remove(userids, usernames, blacktags) {
 
 	"use strict"
 	// console.log(blacktags)
-	var elms = document.querySelectorAll('li.item[data-video-item][data-video-id], div.VideoCard[data-video-item][data-video-id], div.NicoadVideoItem[data-nicoad-item][data-video-id], div.NicoadVideoItem[data-nicoad-item][data-content-id], div.NC-VideoCard[data-video-thumbnail-comment-hover], li.nicoadVideoItem[data-nicoad-video-item]')
+	var elms = document.querySelectorAll('li.item[data-video-item][data-video-id], div.VideoCard[data-video-item][data-video-id], div.NicoadVideoItem[data-nicoad-item][data-video-id], div.NicoadVideoItem[data-nicoad-item][data-content-id], div.NC-VideoCard[data-video-thumbnail-comment-hover], li.nicoadVideoItem[data-nicoad-video-item], div.NC-MediaObject')
 	elms = Array.from(elms).filter(x => !x.hasAttribute('notremoving'))
 
 	elms.forEach(
 		elm => {
-			var sm = elm.getAttribute('data-video-id')
-			if (sm === null) {
-				sm = elm.getAttribute('data-content-id')
-			}
-			if (sm === null) {
-				sm = 'sm' + elm.querySelector('img.thumb[src]').getAttribute('src').split('/')[4]
-			}
-			if (sm === null) {
-				sm = basename(elm.querySelector('a[href]').getAttribute('href'))
-			}
+			var sm = elm.getAttribute('data-video-id') ||
+				elm.getAttribute('data-content-id') ||
+				basename(elm.querySelector('a.NC-Link[href]').getAttribute('href')) ||
+				'sm' + elm.querySelector('img.thumb[src]').getAttribute('src').split('/')[4]
 			//console.log(sm)
 
 			chrome.runtime.sendMessage({
@@ -45,8 +39,8 @@ function video_remove(userids, usernames, blacktags) {
 					// console.log(text)
 					var dom = parser.parseFromString(text, 'text/xml')
 					try {
-						var userid = (dom.querySelector('user_id') || dom.querySelector('ch_id')).textContent
-						var username = (dom.querySelector('user_nickname') || dom.querySelector('ch_name')).textContent
+						var userid = ( dom.querySelector('user_id') || dom.querySelector('ch_id') ).textContent
+						var username = ( dom.querySelector('user_nickname') || dom.querySelector('ch_name') ).textContent
 						var tags = Array.from(dom.querySelector('tags').querySelectorAll('tag'), x => x.textContent)
 					} catch (e) {
 						// console.error( `error parsing https://ext.nicovideo.jp/api/getthumbinfo/${sm} テキスト:${text} エラー内容:${e}`)
@@ -86,7 +80,7 @@ function rpg_remove(games, userids, usernames) {
 	// https://game.nicovideo.jp/atsumaru/ranking
 
 	"use strict"
-	var elms = document.querySelectorAll('section.MatrixRankingMatrix__MatrixRankingGame, div.GameCard__Card')
+	var elms = document.querySelectorAll('section.MatrixRankingMatrix__MatrixRankingGame, div.GameCard__Card, section.GenreRanking__GameSheet')
 	elms = Array.from(elms).filter(x => !x.hasAttribute('notremoving'))
 
 	elms.forEach(
@@ -157,7 +151,7 @@ function wildcards(patterns, string) {
 
 function split_to_array(string) {
 	"use strict"
-	return string.split('\n').filter(x => (x !== ''))
+	return string.split('\n').filter( x => ( x !== '') )
 }
 
 const parser = new DOMParser()
