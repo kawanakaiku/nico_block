@@ -8,7 +8,7 @@ function video() {
 		video_usernames: '',
 		video_blacktags: ''
 	}, function(items) {
-		video_remove(items.video_userids.split('\n'), items.video_usernames.split('\n'), items.video_blacktags.split('\n'))
+		video_remove(split_to_array(items.video_userids), split_to_array(items.video_usernames), split_to_array(items.video_blacktags))
 	})
 }
 
@@ -45,8 +45,8 @@ function video_remove(userids, usernames, blacktags) {
 					// console.log(text)
 					var dom = parser.parseFromString(text, 'text/xml')
 					try {
-						var userid = ( dom.querySelector('user_id') || dom.querySelector('ch_id') ).textContent
-						var username = ( dom.querySelector('user_nickname') || dom.querySelector('ch_name') ).textContent
+						var userid = (dom.querySelector('user_id') || dom.querySelector('ch_id')).textContent
+						var username = (dom.querySelector('user_nickname') || dom.querySelector('ch_name')).textContent
 						var tags = Array.from(dom.querySelector('tags').querySelectorAll('tag'), x => x.textContent)
 					} catch (e) {
 						// console.error( `error parsing https://ext.nicovideo.jp/api/getthumbinfo/${sm} テキスト:${text} エラー内容:${e}`)
@@ -77,7 +77,7 @@ function rpg() {
 		rpg_userids: '',
 		rpg_usernames: ''
 	}, function(items) {
-		rpg_remove(items.rpg_games.split('\n'), items.rpg_userids.split('\n'), items.rpg_usernames.split('\n'))
+		rpg_remove(split_to_array(items.rpg_games), split_to_array(items.rpg_userids), split_to_array(items.rpg_usernames))
 	})
 }
 
@@ -153,6 +153,11 @@ function wildcard(pattern, string) {
 function wildcards(patterns, string) {
 	"use strict"
 	return (patterns.find(pattern => wildcard(pattern, string)) !== undefined)
+}
+
+function split_to_array(string) {
+	"use strict"
+	return string.split('\n').filter(x => (x !== ''))
 }
 
 const parser = new DOMParser()
