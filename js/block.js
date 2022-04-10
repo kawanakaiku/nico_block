@@ -25,9 +25,20 @@ function video_remove(userids, usernames, blacktags) {
 	elms.forEach(
 		elm => {
 			var sm = elm.getAttribute('data-video-id') ||
-				elm.getAttribute('data-content-id') ||
-				basename(elm.querySelector('a.NC-Link[href]').getAttribute('href')) ||
+				elm.getAttribute('data-content-id')
+			
+			if (sm === null) {
+				try {
+					sm = basename(elm.querySelector('a.NC-Link[href]').getAttribute('href'))
+				} catch (e) {}
+			}
+
+			if (sm === null) {
+				try {
 				'sm' + elm.querySelector('img.thumb[src]').getAttribute('src').split('/')[4]
+				} catch (e) { return }
+			}
+
 			//console.log(sm)
 
 			chrome.runtime.sendMessage({
