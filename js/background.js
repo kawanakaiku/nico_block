@@ -32,6 +32,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	return
 })
 
+chrome.runtime.onInstalled.addListener(function(details){
+	return
+	chrome.storage.local.set({
+		"filter_enabled":true,
+		"video_userids":"45261915\n92490088\n123420362\n123523139\n123530845\n23408687\n118851573\n118622294\n940035\n1594318\n940035",
+		"video_usernames":"",
+		"video_blacktags":"",
+		"seiga_userids":"123811507\n79841657",
+		"seiga_usernames":"",
+		"rpg_games":"gm8549",
+		"rpg_userids":"",
+		"rpg_usernames":""
+	}, ()=>{})
+});
+
 /*
 var return_cancel = details => {
 	return { cancel: true }

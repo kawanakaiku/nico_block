@@ -5,6 +5,8 @@ function apply() {
 	video_userids_stored = video_userids.value
 	video_usernames_stored = video_usernames.value
 	video_blacktags_stored = video_blacktags.value
+	seiga_userids_stored = seiga_userids.value
+	seiga_usernames_stored = seiga_usernames.value
 	rpg_games_stored = rpg_games.value
 	rpg_userids_stored = rpg_userids.value
 	rpg_usernames_stored = rpg_usernames.value
@@ -34,6 +36,8 @@ function changed() {
 		video_userids.value !== video_userids_stored ||
 		video_usernames.value !== video_usernames_stored ||
 		video_blacktags.value !== video_blacktags_stored ||
+		seiga_userids.value !== seiga_userids_stored ||
+		seiga_usernames.value !== seiga_usernames_stored ||
 		rpg_games.value !== rpg_games_stored ||
 		rpg_userids.value !== rpg_userids_stored ||
 		rpg_usernames.value !== rpg_usernames_stored
@@ -43,6 +47,8 @@ function all_disabled(b) {
 	video_userids.disabled = b
 	video_usernames.disabled = b
 	video_blacktags.disabled = b
+	seiga_userids.disabled = b
+	seiga_usernames.disabled = b
 	rpg_games.disabled = b
 	rpg_userids.disabled = b
 	rpg_usernames.disabled = b
@@ -54,6 +60,8 @@ function init() {
 		video_userids: '',
 		video_usernames: '',
 		video_blacktags: '',
+		seiga_userids: '',
+		seiga_usernames: '',
 		rpg_games: '',
 		rpg_userids: '',
 		rpg_usernames: ''
@@ -62,6 +70,8 @@ function init() {
 		video_userids_stored = items.video_userids
 		video_usernames_stored = items.video_usernames
 		video_blacktags_stored = items.video_blacktags
+		seiga_userids_stored = items.seiga_userids
+		seiga_usernames_stored = items.seiga_usernames
 		rpg_games_stored = items.rpg_games
 		rpg_userids_stored = items.rpg_userids
 		rpg_usernames_stored = items.rpg_usernames
@@ -70,6 +80,8 @@ function init() {
 		video_userids.value = video_userids_stored
 		video_usernames.value = video_usernames_stored
 		video_blacktags.value = video_blacktags_stored
+		seiga_userids.value = seiga_userids_stored
+		seiga_usernames.value = seiga_usernames_stored
 		rpg_games.value = rpg_games_stored
 		rpg_userids.value = rpg_userids_stored
 		rpg_usernames.value = rpg_usernames_stored
@@ -82,6 +94,8 @@ function to_json() {
 		video_userids: video_userids_stored,
 		video_usernames: video_usernames_stored,
 		video_blacktags: video_blacktags_stored,
+		seiga_userids: seiga_userids_stored,
+		seiga_usernames: seiga_usernames_stored,
 		rpg_games: rpg_games_stored,
 		rpg_userids: rpg_userids_stored,
 		rpg_usernames: rpg_usernames_stored
@@ -122,6 +136,8 @@ function import_txt(txt) {
 	video_userids.value = obj.video_userids
 	video_usernames.value = obj.video_usernames
 	video_blacktags.value = obj.video_blacktags
+	seiga_userids.value = obj.seiga_userids
+	seiga_usernames.value = obj.seiga_usernames
 	rpg_games.value = obj.rpg_games
 	rpg_userids.value = obj.rpg_userids
 	rpg_usernames.value = obj.rpg_usernames
@@ -145,6 +161,8 @@ var apply_button = document.querySelector('button#apply'),
 	video_userids = document.querySelector('textarea#video_userids'),
 	video_usernames = document.querySelector('textarea#video_usernames'),
 	video_blacktags = document.querySelector('textarea#video_blacktags'),
+	seiga_userids = document.querySelector('textarea#seiga_userids'),
+	seiga_usernames = document.querySelector('textarea#seiga_usernames'),
 	rpg_games = document.querySelector('textarea#rpg_games'),
 	rpg_userids = document.querySelector('textarea#rpg_userids'),
 	rpg_usernames = document.querySelector('textarea#rpg_usernames'),
@@ -164,6 +182,8 @@ filter_enabled.addEventListener('input', change)
 video_userids.addEventListener('input', change)
 video_usernames.addEventListener('input', change)
 video_blacktags.addEventListener('input', change)
+seiga_userids.addEventListener('input', change)
+seiga_usernames.addEventListener('input', change)
 rpg_games.addEventListener('input', change)
 rpg_userids.addEventListener('input', change)
 rpg_usernames.addEventListener('input', change)

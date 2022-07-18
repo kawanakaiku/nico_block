@@ -4,7 +4,7 @@ function video() {
 	"use strict"
 	//console.log('running video')
 	chrome.storage.local.get({
-		video_userids: '45261915\n92490088\n123420362\n123523139\n123530845\n23408687\n118851573\n118622294\n940035',
+		video_userids: '',
 		video_usernames: '',
 		video_blacktags: ''
 	}, function(items) {
@@ -74,11 +74,64 @@ function video_remove(userids, usernames, blacktags) {
 	)
 }
 
+function seiga() {
+	"use strict"
+	//console.log('running video')
+	chrome.storage.local.get({
+		seiga_userids: '',
+		seiga_usernames: ''
+	}, function(items) {
+		seiga_remove(split_to_array(items.seiga_userids), split_to_array(items.seiga_usernames))
+	})
+}
+
+function seiga_remove(userids, usernames) {
+	"use strict"
+	// console.log(blacktags)
+	var elms = document.querySelectorAll('div.illust_list_img')
+	elms = Array.from(elms).filter(x => !x.hasAttribute('nico_block_processed'))
+
+	elms.forEach(
+		elm => {
+			var im = elm.querySelector('a[href]').getAttribute('href').split(/\/+/).pop().split('?', 1)[0]
+
+			chrome.runtime.sendMessage({
+					contentScriptQuery: 'post',
+					endpoint: `https://seiga.nicovideo.jp/api/illust/info?id=${im}`
+				},
+				(response) => {
+					var text = response
+					// console.log(text)
+					var dom = parser.parseFromString(text, 'text/xml')
+					try {
+						var userid = dom.querySelector('response > image > user_id').textContent
+						// var username = ( dom.querySelector('user_nickname') || dom.querySelector('ch_name') ).textContent
+					} catch (e) {
+						// console.error( `error parsing https://ext.nicovideo.jp/api/getthumbinfo/${sm} テキスト:${text} エラー内容:${e}`)
+						return
+					}
+					//console.log(userid, username)
+					// console.log(tags)
+					//console.log(`${sm} userid:${userid} username:${username} tags:${tags}`)
+					if (userids.includes(userid)) {
+						console.log(`removing ${im} userid:${userid}`)
+						// elm.remove()
+						elm.style.visibility = 'hidden';
+					}
+					elm.setAttribute("nico_block_processed", "")
+				}
+			)
+
+
+		}
+	)
+}
+
 function rpg() {
 	"use strict"
 	//console.log('running rpg')
 	chrome.storage.local.get({
-		rpg_games: 'gm8549',
+		rpg_games: '',
 		rpg_userids: '',
 		rpg_usernames: ''
 	}, function(items) {
@@ -171,9 +224,11 @@ const basename = (url) => url.split(/[\\/]/).pop()
 
 function main() {
 	if (wildcard('https://www.nicovideo.jp/*', url)) {
-		setInterval(video, 400)
+		setInterval(video, 100)
 	} else if (wildcard('https://game.nicovideo.jp/*', url)) {
-		setInterval(rpg, 400)
+		setInterval(rpg, 100)
+	} else if (wildcard('https://seiga.nicovideo.jp/*', url)) {
+		setInterval(seiga, 100)
 	}
 }
 
