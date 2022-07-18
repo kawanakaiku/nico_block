@@ -224,12 +224,18 @@ const basename = (url) => url.split(/[\\/]/).pop()
 
 function main() {
 	if (wildcard('https://www.nicovideo.jp/*', url)) {
-		setInterval(video, 100)
+		loop(video)
 	} else if (wildcard('https://game.nicovideo.jp/*', url)) {
-		setInterval(rpg, 100)
+		loop(rpg)
 	} else if (wildcard('https://seiga.nicovideo.jp/*', url)) {
-		setInterval(seiga, 100)
+		loop(seiga)
 	}
+}
+
+function loop(func) {
+	const duration = 200;
+	func()
+	setInterval(func, duration)
 }
 
 // check if filtering enabled

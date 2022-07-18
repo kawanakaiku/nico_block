@@ -13,7 +13,7 @@
    "content_scripts": [ {
       "js": [ "js/block.js" ],
       "matches": [ "https://www.nicovideo.jp/*", "https://game.nicovideo.jp/*", "https://seiga.nicovideo.jp/*" ],
-      "run_at": "document_start"
+      "run_at": "document_end"
    } ],
    "background": {
     "scripts": [
