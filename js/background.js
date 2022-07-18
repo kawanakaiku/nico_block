@@ -33,7 +33,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 })
 
 chrome.runtime.onInstalled.addListener(function(details){
-	return
 	chrome.storage.local.set({
 		"filter_enabled":true,
 		"video_userids":"45261915\n92490088\n123420362\n123523139\n123530845\n23408687\n118851573\n118622294\n940035\n1594318\n940035",
