@@ -1,0 +1,30 @@
+{
+   "version": "0.1",
+   "manifest_version": 2,
+   "name": "Niconico Filter",
+   "browser_action": {
+      "default_icon": {
+         "19": "img/badge_on.png"
+      },
+      "default_popup": "html/popup.html",
+      "default_title": "Niconico Filter",
+      "name": "Niconico Filter"
+   },
+   "content_scripts": [ {
+      "js": [ "js/block.js" ],
+      "matches": [ "https://www.nicovideo.jp/*", "https://game.nicovideo.jp/*", "https://seiga.nicovideo.jp/*" ],
+      "run_at": "document_start"
+   } ],
+   "background": {
+    "scripts": [
+      "js/background.js"
+    ],
+     "persistent": true
+   },
+   "description": "ニコニコ動画の検索リストから不要な動画を除外します。",
+   "icons": {
+      "19": "img/badge_on.png",
+      "48": "img/icon_48.png"
+   },
+  "permissions": ["storage", "webRequest", "webRequestBlocking", "https://*.nicovideo.jp/*"]
+}
