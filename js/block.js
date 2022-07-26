@@ -117,6 +117,8 @@ function seiga_remove(userids, usernames) {
 						console.log(`removing ${im} userid:${userid}`)
 						// elm.remove()
 						elm.style.visibility = 'hidden';
+					} else {
+						elm.setAttribute("nico_block_not_blocking", "")
 					}
 					elm.setAttribute("nico_block_processed", "")
 				}

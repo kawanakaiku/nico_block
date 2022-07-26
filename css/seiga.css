@@ -1,0 +1,3 @@
+div.illust_list_img:not([nico_block_not_blocking]) {
+    visibility: hidden !important;
+}
